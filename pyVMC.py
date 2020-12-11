@@ -1979,112 +1979,115 @@ elif intent_name == "remove-mgw-rule":
         else :
             print("Issues deleting the security rule. Check the syntax.")
 elif intent_name == "new-group":
-    gw = sys.argv[2].lower()
-    group_id = sys.argv[3]
-    if gw == "mgw" and len(sys.argv) == 4:
-        ip_addresses = []
-        ip_address = ''
-        # Start a loop that will run until the user enters 'done'.
-        while ip_address != 'done':
-        # Ask the user for a name.
-            ip_address = input("Please enter IP address (for example, \"172.16.10.20\") or type 'done' when your list is finished:")
-        # Add the new name to our list.
-            if ip_address != "done":
-                ip_addresses.append(ip_address)
-        newSDDCGroup = newSDDCGroupIPaddress(proxy,session_token,gw,group_id,ip_addresses)
-        print(newSDDCGroup)
-    if gw == "mgw" and len(sys.argv) == 5:
-        ip_addresses_string = sys.argv [4]
-        ip_addresses = ip_addresses_string.split(",")
-        newSDDCGroup = newSDDCGroupIPaddress(proxy,session_token,gw,group_id,ip_addresses)
-        print(newSDDCGroup) 
-    if gw == "cgw":
-        group_criteria = sys.argv[4].lower()
-        if group_criteria not in ["ip-based", "member-based", "criteria-based", "group-based"]:
-            print("Incorrect syntax. Make sure you use one of the 4 methods to define a CGW group: ip-based, member-based, criteria-based, or group-based.")
-        else:
-            if group_criteria == "ip-based" and len(sys.argv) == 5:
-                ip_addresses = []
-            # Set new_name to something other than 'quit'.
-                ip_address = ''
-            # Start a loop that will run until the user enters 'quit'.
-                while ip_address != 'done':
+    if len(sys.argv) ==3 and sys.argv[2].lower() == "help":
+        print("help wanted")
+    else:
+        gw = sys.argv[2].lower()
+        group_id = sys.argv[3]
+        if gw == "mgw" and len(sys.argv) == 4:
+            ip_addresses = []
+            ip_address = ''
+            # Start a loop that will run until the user enters 'done'.
+            while ip_address != 'done':
             # Ask the user for a name.
-                    ip_address = input("Please enter IP address (\"172.16.10.20\") or type 'done' when your list is finished: ")
+                ip_address = input("Please enter IP address (for example, \"172.16.10.20\") or type 'done' when your list is finished:")
             # Add the new name to our list.
-                    if ip_address != "done":
-                        ip_addresses.append(ip_address)
-                newSDDCGroup = newSDDCGroupIPaddress(proxy,session_token,gw,group_id,ip_addresses)
-                print(newSDDCGroup)
-            elif group_criteria == "ip-based" and len(sys.argv) == 6:
-                ip_addresses_string = sys.argv [5]
-                ip_addresses = ip_addresses_string.split(",")
-                newSDDCGroup = newSDDCGroupIPaddress(proxy,session_token,gw,group_id,ip_addresses)
-                print(newSDDCGroup)
-            elif group_criteria == "criteria-based" and len(sys.argv) == 5:
-            # Only support for Virtual_Machine based criteria for now.
-                # member_type = input("Please enter your criteria type:")
-                member_type = "VirtualMachine"
-                key = input("Please enter the criteria (Name, Tag, OSName or ComputerName): ")
-                if key not in ["Name", "Tag", "OSName", "ComputerName"]:
-                    print("Incorrect syntax. Check again.")
-                else:
-                    operator=input("Please enter the operator (EQUALS, NOTEQUALS, CONTAINS, STARTSWITH, ENDSWITH): ")
-                    if operator not in ["EQUALS", "NOTEQUALS", "CONTAINS", "STARTSWITH", "ENDSWITH"]:
+                if ip_address != "done":
+                    ip_addresses.append(ip_address)
+            newSDDCGroup = newSDDCGroupIPaddress(proxy,session_token,gw,group_id,ip_addresses)
+            print(newSDDCGroup)
+        if gw == "mgw" and len(sys.argv) == 5:
+            ip_addresses_string = sys.argv [4]
+            ip_addresses = ip_addresses_string.split(",")
+            newSDDCGroup = newSDDCGroupIPaddress(proxy,session_token,gw,group_id,ip_addresses)
+            print(newSDDCGroup) 
+        if gw == "cgw":
+            group_criteria = sys.argv[4].lower()
+            if group_criteria not in ["ip-based", "member-based", "criteria-based", "group-based"]:
+                print("Incorrect syntax. Make sure you use one of the 4 methods to define a CGW group: ip-based, member-based, criteria-based, or group-based.")
+            else:
+                if group_criteria == "ip-based" and len(sys.argv) == 5:
+                    ip_addresses = []
+                # Set new_name to something other than 'quit'.
+                    ip_address = ''
+                # Start a loop that will run until the user enters 'quit'.
+                    while ip_address != 'done':
+                # Ask the user for a name.
+                        ip_address = input("Please enter IP address (\"172.16.10.20\") or type 'done' when your list is finished: ")
+                # Add the new name to our list.
+                        if ip_address != "done":
+                            ip_addresses.append(ip_address)
+                    newSDDCGroup = newSDDCGroupIPaddress(proxy,session_token,gw,group_id,ip_addresses)
+                    print(newSDDCGroup)
+                elif group_criteria == "ip-based" and len(sys.argv) == 6:
+                    ip_addresses_string = sys.argv [5]
+                    ip_addresses = ip_addresses_string.split(",")
+                    newSDDCGroup = newSDDCGroupIPaddress(proxy,session_token,gw,group_id,ip_addresses)
+                    print(newSDDCGroup)
+                elif group_criteria == "criteria-based" and len(sys.argv) == 5:
+                # Only support for Virtual_Machine based criteria for now.
+                    # member_type = input("Please enter your criteria type:")
+                    member_type = "VirtualMachine"
+                    key = input("Please enter the criteria (Name, Tag, OSName or ComputerName): ")
+                    if key not in ["Name", "Tag", "OSName", "ComputerName"]:
                         print("Incorrect syntax. Check again.")
-                    if key == "Tag" and operator == "NOTEQUALS":
-                        print("Incorrect syntax. The tag method does not support the NOTEQUALS Operator. Try again.")
                     else:
-                        value=input("Enter the value of your membership criteria: ")
+                        operator=input("Please enter the operator (EQUALS, NOTEQUALS, CONTAINS, STARTSWITH, ENDSWITH): ")
+                        if operator not in ["EQUALS", "NOTEQUALS", "CONTAINS", "STARTSWITH", "ENDSWITH"]:
+                            print("Incorrect syntax. Check again.")
+                        if key == "Tag" and operator == "NOTEQUALS":
+                            print("Incorrect syntax. The tag method does not support the NOTEQUALS Operator. Try again.")
+                        else:
+                            value=input("Enter the value of your membership criteria: ")
+                            newSDDCGroup = newSDDCGroupCriteria(proxy,session_token,gw,group_id,member_type,key,operator,value)
+                            print(newSDDCGroup)
+                elif group_criteria == "criteria-based" and len(sys.argv) == 8:
+                # Only support for Virtual_Machine based criteria for now.
+                    # member_type = input("Please enter your criteria type:")
+                    member_type = "VirtualMachine"
+                    key = sys.argv[5]
+                    operator = sys.argv[6]
+                    value = sys.argv[7]
+                    if key not in ["Name", "Tag", "OSName", "ComputerName"]:
+                        print("Incorrect syntax. Check again.")
+                    elif operator not in ["EQUALS", "NOTEQUALS", "CONTAINS", "STARTSWITH", "ENDSWITH"]:
+                        print("Incorrect syntax. Check again.")
+                    else:
                         newSDDCGroup = newSDDCGroupCriteria(proxy,session_token,gw,group_id,member_type,key,operator,value)
                         print(newSDDCGroup)
-            elif group_criteria == "criteria-based" and len(sys.argv) == 8:
-            # Only support for Virtual_Machine based criteria for now.
-                # member_type = input("Please enter your criteria type:")
-                member_type = "VirtualMachine"
-                key = sys.argv[5]
-                operator = sys.argv[6]
-                value = sys.argv[7]
-                if key not in ["Name", "Tag", "OSName", "ComputerName"]:
-                    print("Incorrect syntax. Check again.")
-                elif operator not in ["EQUALS", "NOTEQUALS", "CONTAINS", "STARTSWITH", "ENDSWITH"]:
-                    print("Incorrect syntax. Check again.")
-                else:
-                    newSDDCGroup = newSDDCGroupCriteria(proxy,session_token,gw,group_id,member_type,key,operator,value)
+                elif group_criteria == "member-based" and len(sys.argv) == 5:
+                # v1 will be based on a list of VMs. Will not include segment-based for the time being,
+                    vm_list = []
+                # Set new_name to something other than 'quit'.
+                    vm_name = ''
+                # Start a loop that will run until the user enters 'quit'.
+                    while vm_name != 'done':
+                # Ask the user for a name.
+                        vm_name = input("Please enter the name of the VM or type 'done' when your list is finished: ")
+                # Add the new name to our list.
+                        if vm_name != "done":
+                            vm_id = getVMExternalID(proxy,session_token,vm_name)
+                            vm_list.append(vm_id)
+                    newSDDCGroup = newSDDCGroupVM(proxy,session_token,gw,group_id,vm_list)
                     print(newSDDCGroup)
-            elif group_criteria == "member-based" and len(sys.argv) == 5:
-            # v1 will be based on a list of VMs. Will not include segment-based for the time being,
-                vm_list = []
-            # Set new_name to something other than 'quit'.
-                vm_name = ''
-            # Start a loop that will run until the user enters 'quit'.
-                while vm_name != 'done':
-            # Ask the user for a name.
-                    vm_name = input("Please enter the name of the VM or type 'done' when your list is finished: ")
-            # Add the new name to our list.
-                    if vm_name != "done":
-                        vm_id = getVMExternalID(proxy,session_token,vm_name)
-                        vm_list.append(vm_id)
-                newSDDCGroup = newSDDCGroupVM(proxy,session_token,gw,group_id,vm_list)
-                print(newSDDCGroup)
-            elif group_criteria == "member-based" and len(sys.argv) == 6:
-                vm_name_string = sys.argv[5]
-                vm_name_list = vm_name_string.split(",")
-                ## iterate through list or through previous string to get list of external ids
-                vm_external_id_list = [getVMExternalID(proxy,session_token,x) for x in vm_name_list]
-                # vm_id = getVMExternalID(proxy,session_token,vm_name)
-                newSDDCGroup = newSDDCGroupVM(proxy,session_token,gw,group_id,vm_external_id_list)
-                print(newSDDCGroup)
-            elif group_criteria == "group-based":
-                #Example: new-group cgw new-group-name group-based existing-group-to-add-as-member
-                group_name_string = sys.argv[5]
-                retval = newSDDCGroupGr(proxy,session_token,gw,group_id,group_name_string)
-                if retval == 200:
-                    print("Group created")
+                elif group_criteria == "member-based" and len(sys.argv) == 6:
+                    vm_name_string = sys.argv[5]
+                    vm_name_list = vm_name_string.split(",")
+                    ## iterate through list or through previous string to get list of external ids
+                    vm_external_id_list = [getVMExternalID(proxy,session_token,x) for x in vm_name_list]
+                    # vm_id = getVMExternalID(proxy,session_token,vm_name)
+                    newSDDCGroup = newSDDCGroupVM(proxy,session_token,gw,group_id,vm_external_id_list)
+                    print(newSDDCGroup)
+                elif group_criteria == "group-based":
+                    #Example: new-group cgw new-group-name group-based existing-group-to-add-as-member
+                    group_name_string = sys.argv[5]
+                    retval = newSDDCGroupGr(proxy,session_token,gw,group_id,group_name_string)
+                    if retval == 200:
+                        print("Group created")
+                    else:
+                        print("Could not create group")
                 else:
-                    print("Could not create group")
-            else:
-                print("Incorrect syntax. Try again.")
+                    print("Incorrect syntax. Try again.")
 elif intent_name == "show-group":
     if len(sys.argv) == 2:
         mgw_groups = getSDDCGroups(proxy, session_token, "mgw")
