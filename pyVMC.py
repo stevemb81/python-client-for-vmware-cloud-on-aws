@@ -1350,6 +1350,7 @@ def getSDDCInternetStats(proxy_url, sessiontoken, edge_path):
 def getHelp():
     print("\nWelcome to PyVMC !")
     print("\nHere are the currently supported commands: ")
+    print("\tFor additional assistance enter <command> help")
     print("\nTo get a list of your VMs:")
     print("\tshow-vms")
     print("\nTo display a lit of your SDDCs:")
@@ -1505,11 +1506,66 @@ elif intent_name == "show-dns-zones":
 elif intent_name == "show-sddc-hosts":
     print(getCDChosts(SDDC_ID, ORG_ID, session_token))
 elif intent_name == "show-sddcs":
-    print(getSDDCS(ORG_ID, session_token))
+    if len(sys.argv) ==3 and sys.argv[2].lower() == "help":
+        print("NAME")
+        print("\tshow-sddcs")
+        print("\nDESCRIPTION")
+        print("\tList the organization ID and SDDCs within the organization")
+        print("\nSYNOPSIS")
+        print("\tshow-sddcs")
+        print("\nEXAMPLES")
+        print("\tshow-sddcs")
+        print("\n\toutput:")
+        print("\n\t\t+--------------------------------------+")
+        print("\t\t|                OrgID                 |")
+        print("\t\t+--------------------------------------+")
+        print("\t\t| 12345678-1234-1234-1234-1234567890fa |")
+        print("\t\t+--------------------------------------+")
+        print("\t\t+------+-------+--------+-------+--------------------------------------+")
+        print("\t\t| Name | Cloud | Status | Hosts |                  ID                  |")
+        print("\t\t+------+-------+--------+-------+--------------------------------------+")
+        print("\t\t|  S1  |  AWS  | READY  |   3   | 12345678-1234-1234-1234-123456789012 |")
+        print("\t\t+------+-------+--------+-------+--------------------------------------+")
+    else:  
+        print(getSDDCS(ORG_ID, session_token))
 elif intent_name == "show-org-users":
-    print(showORGusers(ORG_ID, session_token))
+    if len(sys.argv) ==3 and sys.argv[2].lower() == "help":
+        print("NAME")
+        print("\tshow-org-users")
+        print("\nDESCRIPTION")
+        print("\tProvides a list of users (first name, last name, email address) of user accounts in an organization") 
+        print("\nSYNOPSIS")
+        print("\tshow-org-users")
+        print("\nEXAMPLES")
+        print("\tshow-org-users")
+        print("\n\toutput:")
+        print("\n\t\t+-------------+-------------+------------------------+")
+        print("\t\t|  First Name |  Last Name  |       User Name        |")
+        print("\t\t+-------------+-------------+------------------------+")
+        print("\t\t|    Jane     |   Doe       |   jdoe@vmware.com      |")
+        print("\t\t|    John     |   Smith     |   jsmith@vmware.com    |")
+        print("\t\t|    Lisa     |   Admin     |   ladmin@vmware.com    |")
+        print("\t\t+-------------+-------------+------------------------+\n")
+    else:
+        print(showORGusers(ORG_ID, session_token))
 elif intent_name == "show-vms":
-    print(getVMs(proxy,session_token))
+    if len(sys.argv) ==3 and sys.argv[2].lower() == "help":
+        print("NAME")
+        print("\tshow-vms")
+        print("\nDESCRIPTION")
+        print("\tList the virtual machines in your SDDC")
+        print("\nSYNOPSIS")
+        print("\tshow-vms")
+        print("\nEXAMPLES")
+        print("\tshow-vms")
+        print("\n\toutput:")
+        print("\n\t\t+--------------+------------+--------------------------------------+")
+        print("\t\t| Display_Name |   Status   |             External_ID              |")
+        print("\t\t|   test-vm1   | VM_STOPPED | 5021b2bc-e42d-92df-087b-123456789077 |")
+        print("\t\t|   test-vm2   | VM_RUNNING | 5021b2bc-e42d-92df-087b-123456789078 |")
+        print("\t\t+--------------+------------+--------------------------------------+")
+    else:
+        print(getVMs(proxy,session_token))
 elif intent_name == "show-connected-accounts":
     print(getConnectedAccounts(ORG_ID,session_token))
 elif intent_name == "show-compatible-subnets":
@@ -1519,7 +1575,19 @@ elif intent_name == "show-compatible-subnets":
     else:
         print(getCompatibleSubnets(ORG_ID,session_token,sys.argv[2],sys.argv[3]))
 elif intent_name == "get-access-token":
-    print(session_token)
+    if len(sys.argv) ==3 and sys.argv[2].lower() == "help":
+        print("NAME")
+        print("\tget-access-token")
+        print("\nDESCRIPTION")
+        print("\tProvdes the access token") 
+        print("\nSYNOPSIS")
+        print("\tget-access-token")
+        print("\nEXAMPLES")
+        print("\tget-access-token")
+        print("\n\toutput:")
+        print("\n\t\teyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJodHRwczovL2V4YW1wbGUuYXV0aDAuY29tLyIsImF1ZCI6Imh0dHBzOi8vYXBpLmV4YW1wbGUuY29tL2NhbGFuZGFyL3YxLyIsInN1YiI6InVzcl8xMjMiLCJpYXQiOjE0NTg3ODU3OTYsImV4cCI6MTQ1ODg3MjE5Nn0.CA7eaHjIHz5NxeIJoFK9krqaeZrPLwmMmgI_XiQiIkQ\n")
+    else:
+        print(session_token)
 elif intent_name == "show-vpn":
     if len(sys.argv) == 2:
         SDDCVPN = getSDDCVPN(proxy, session_token)
@@ -1588,9 +1656,69 @@ elif intent_name == "remove-l2vpn":
     id = sys.argv[2]
     print(removeSDDCL2VPN(proxy, session_token,id))
 elif intent_name == "show-network":
-    getSDDCnetworks(proxy, session_token)
+    if len(sys.argv) ==3 and sys.argv[2].lower() == "help":
+        print("NAME")
+        print("\tshow-network")
+        print("\nDESCRIPTION")
+        print("\tGets the NSX segments configured in the SDDC.  The networks are visible in the Networking & Security tab in the Segments section.") 
+        print("\nSYNOPSIS")
+        print("\tshow-network")
+        print("\nEXAMPLES")
+        print("\tshow-network")
+        print("\n\toutput:")
+        print("\n\t\t+----------------------------------------+---------------------------------------------+--------------+------------------+------------------+")
+        print("\t\t|                  Name                  |                      id                     |     Type     |     Network      | Default Gateway  |")
+        print("\t\t+----------------------------------------+---------------------------------------------+--------------+------------------+------------------+")
+        print("\t\t|               network-11               |     5ed16c50-f3d8-11ea-b456-b70580bc12fd    |    ROUTED    |   10.11.0.0/24   |   10.11.0.1/24   |")
+        print("\t\t|              App-DB-Demo               |     c61af300-5653-11e9-ac78-25b8f5d99863    |    ROUTED    | 192.168.100.0/24 | 192.168.100.1/24 |")
+        print("\t\t|             disconnected-1             |     ef744b90-efc6-11e9-a3fd-27fbac666542    | DISCONNECTED |        -         |        -         |")
+        print("\t\t+----------------------------------------+---------------------------------------------+--------------+------------------+------------------+\n")
+    else:
+        getSDDCnetworks(proxy, session_token)
 elif intent_name == "new-network":
-    if sys.argv[3].lower() == "routed" and len(sys.argv) == 7:
+    if len(sys.argv) ==3 and sys.argv[2].lower() == "help":
+        print("NAME")
+        print("\tnew-network")
+        print("\nDESCRIPTION")
+        print("\tNetwork segments are logical networks for use by workload VMs in the SDDC compute network.  VMware Cloud on AWS supports three types of network segments: routed, extended and disconnected.  A routed network segment (the default type) has connectivity to other logical networks in the SDDC and, through the SDDC firewall, to external networks.  An extended network segment extends an existing L2VPN tunnel, providing a single IP address space that spans the SDDC and an on-premises network.  A disconnected network segment has no uplink, and provides an isolated network accessible only to VMs connected to it. Disconnected segments are created when needed by HCX. You can also create them yourself, and can convert them to other segment types.")
+        print("\nSYNOPSIS")
+        print("\tnew-network display_name routing_type [gateway_address] [dhcp_range] [domain_name]")
+        print("\n\tdisplay_name (string) the name of the network to be created")
+        print("\n\trouting_type (string) routed, disconnected, extended")
+        print("\n\tgateway_address (string) Optional but required for 'routed' and 'disconnected' networks.  the gateway_address argument is the gateway IP address and the CIDR notation for the network.  Example 192.168.1.1/24 creates the gateway IP address of 192.168.1.1 with a /24 or 255.255.255.0 network")
+        print("\n\tdhcp_range (string) Optional.  The range of IP addresses to be allocated to the NSX dhcp server.  Only for 'routed' networks.  The range must be included in the gateway address CIDR")
+        print("\n\tdomain_name (string) Optional.  The domain name to be configured in the NSX dhcp server.  Only for 'routed' networks.")
+        print("\nEXAMPLES")
+        print("\tnew-network testnetwork2 routed 192.168.173.1/24")
+        print("\n\toutput:")
+        print("\n\t\tThe following network has been created:")
+        print("\t\t+--------------+------------------+--------------+")
+        print("\t\t|     Name     |     Gateway      | Routing Type |")
+        print("\t\t+--------------+------------------+--------------+")
+        print("\t\t| testnetwork2 | 192.168.173.1/24 |    ROUTED    |")
+        print("\t\t+--------------+------------------+--------------+")
+        print("\n\tnew-network testnetwork2 routed 192.168.173.1/24 192.168.173.100-192.168.173.200 domain.local")
+        print("\n\t\tThe following network has been created:")
+        print("\t\t+--------------+------------------+---------------------------------+--------------+--------------+")
+        print("\t\t|     Name     |     Gateway      |               DHCP              | Domain Name  | Routing Type |")
+        print("\t\t+--------------+------------------+---------------------------------+--------------+--------------+")
+        print("\t\t| testnetwork2 | 192.168.173.1/24 | 192.168.173.100-192.168.173.200 | domain.local |    ROUTED    |")
+        print("\t\t+--------------+------------------+---------------------------------+--------------+--------------+")
+        print("\n\tnew-network testnetwork2 disconnected 192.168.173.1/24")
+        print("\n\t\tThe following network has been created:")
+        print("\t\t+--------------+------------------+--------------+")
+        print("\t\t|     Name     |     Gateway      | Routing Type |")
+        print("\t\t+--------------+------------------+--------------+")
+        print("\t\t| testnetwork2 | 192.168.173.1/24 | DISCONNECTED |")
+        print("\t\t+--------------+------------------+--------------+")
+        print("\n\tnew-network testnetwork2 extended testnetwork2 1234")
+        print("\n\t\tThe following network has been created:")
+        print("\t\t+--------------+--------------------------------------+-----------+")
+        print("\t\t|     Name     |                  id                  | Tunnel ID |")
+        print("\t\t+--------------+--------------------------------------+-----------+")
+        print("\t\t| testnetwork2 | c61af300-5653-11e9-ac78-25b8f5d99863 |    1234   |")
+        print("\t\t+--------------+--------------------------------------+-----------+\n")
+    elif sys.argv[3].lower() == "routed" and len(sys.argv) == 7:
         # DHCP-Enabled Network
         display_name = sys.argv[2]
         routing_type = "ROUTED"
@@ -1600,7 +1728,7 @@ elif intent_name == "new-network":
         newSDDC = newSDDCnetworks(proxy, session_token, display_name, gateway_address, dhcp_range, domain_name, routing_type)
         print(newSDDC)
     elif sys.argv[3].lower() == "disconnected" :
-        # Disconnected Network
+        # disconnected network
         display_name = sys.argv[2]
         routing_type = "DISCONNECTED"
         gateway_address = sys.argv[4]
@@ -1625,8 +1753,21 @@ elif intent_name == "new-network":
     else:
         print("Incorrect syntax. Try again or check the help.")
 elif intent_name == "remove-network":
-    network_id = sys.argv[2]
-    print(removeSDDCNetworks(proxy, session_token,network_id))
+    if len(sys.argv) ==3 and sys.argv[2].lower() == "help":
+        print("NAME")
+        print("\tremove-network")
+        print("\nDESCRIPTION")
+        print("\tRemove a Segment from the SDDC") 
+        print("\nSYNOPSIS")
+        print("\tremove-network network_id ")
+        print("\n\t\t network_id (string) the ID of the network to be removed.  You can find the network_id by running the command 'show-network'")
+        print("\nEXAMPLES")
+        print("\tremove-network testnetwork2")
+        print("\n\toutput:")
+        print("\n\t\tThe network testnetwork2 has been deleted\n")
+    else:
+        network_id = sys.argv[2]
+        print(removeSDDCNetworks(proxy, session_token,network_id))
 elif intent_name == "show-nat":
     if len(sys.argv) == 2:
         print(getSDDCNAT(proxy, session_token))
@@ -1860,9 +2001,25 @@ elif intent_name == "show-vpn-internet-ip":
     public_ip = getSDDCVPNInternetIP(proxy, session_token)
     print(public_ip)
 elif intent_name == "show-sddc-state":
-    sddc_state = getSDDCState(ORG_ID, SDDC_ID, session_token)
-    print("\nThis is your current environment:")
-    print(sddc_state)
+    if len(sys.argv) ==3 and sys.argv[2].lower() == "help":
+        print("NAME")
+        print("\tshow-sddc-state")
+        print("\nDESCRIPTION")
+        print("\tProvides the name, ID, Status, Type, and region of the SDDC") 
+        print("\nSYNOPSIS")
+        print("\tshow-sddc-state")
+        print("\nEXAMPLES")
+        print("\tshow-sddc-state")
+        print("\n\toutput:")
+        print("\n\t\t+------+--------------------------------------+--------+-------+-----------+-----------------+")
+        print("\t\t| Name |                  Id                  | Status |  Type |   Region  | Deployment Type |")
+        print("\t\t+------+--------------------------------------+--------+-------+-----------+-----------------+")
+        print("\t\t|  S1  | 12345678-1234-1234-1234-123456789012 | READY  | 1NODE | US_EAST_1 |    SINGLE_AZ    |")
+        print("\t\t+------+--------------------------------------+--------+-------+-----------+-----------------+")
+    else:
+        sddc_state = getSDDCState(ORG_ID, SDDC_ID, session_token)
+        print("\nThis is your current environment:")
+        print(sddc_state)
 elif intent_name == "new-mgw-rule":
     sequence_number = 0
     display_name = sys.argv[2]
@@ -1980,7 +2137,7 @@ elif intent_name == "remove-mgw-rule":
             print("Issues deleting the security rule. Check the syntax.")
 elif intent_name == "new-group":
     if len(sys.argv) ==3 and sys.argv[2].lower() == "help":
-        print("help wanted")
+        print("new-group")
     else:
         gw = sys.argv[2].lower()
         group_id = sys.argv[3]
@@ -2161,9 +2318,9 @@ elif intent_name == "new-service":
                 if (destination_port != 'next') and (destination_port != "done"):
                     destination_port_list.append(destination_port)
             # print(service_id)
-            # print(destination_port_list)
-            # print(source_port_list)
-            # print(l4_protocol)
+            # print(destination_port_list)
+            # print(source_port_list)
+            # print(l4_protocol)
             service_entry = {
                 "l4_protocol": l4_protocol,
                 "source_ports": source_port_list,
@@ -2172,8 +2329,8 @@ elif intent_name == "new-service":
                 "id" : service_entry_id,
                 "display_name" : service_entry_id     }
             service_entry_list.append(service_entry)
-            # print(service_entry)
-            # print(service_entry_list)
+            # print(service_entry)
+            # print(service_entry_list)
         newSDDCService(proxy,session_token,service_id,service_entry_list)
         sddc_service = getSDDCService(proxy,session_token,service_id)
         print(sddc_service)
